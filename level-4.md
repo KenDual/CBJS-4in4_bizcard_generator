@@ -40,9 +40,9 @@ Nhưng trên payload trên Caido chỉ có 2 dấu `\\` là vì ở backend đã
 3. bọc đọc cặp backtick `` ` ` `` để thực thi bên trong `"Hello $username"` -> `` "Hello `id`" ``
 4. gắn `| sh` để execute `` ` ` `` bên trong `" "` (mặc định nó sẽ không execute nếu không yêu cầu thực thi
 
-![](https://uploads.linear.app/b471c4ef-0f5a-4e1c-b641-7b7285ddb9ac/5400a4e3-63c7-4e21-acf0-b1fe7df011bf/cdef130b-b034-42db-bc1e-e0525bf06cbb?signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRoIjoiL2I0NzFjNGVmLTBmNWEtNGUxYy1iNjQxLTdiNzI4NWRkYjlhYy81NDAwYTRlMy02M2M3LTRlMjEtYWNmMC1iMWZlN2RmMDExYmYvY2RlZjEzMGItYjAzNC00MmRiLWJjMWUtZTA1MjViZjA2Y2JiIiwiaWF0IjoxNzg2OTUxMDQzLCJleHAiOjE3ODY5OTQyNDN9.Cm4HlqaOUzXjQpyK8rOUer1whAZVh2OwlU6P1IvAmxQ)
+![](images/level4-execute_command.png)
 
-![](https://uploads.linear.app/b471c4ef-0f5a-4e1c-b641-7b7285ddb9ac/1cfba3a8-c2a4-43b4-97b0-54fa82374077/5b6df5b6-2706-472d-979a-6828838193b2?signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRoIjoiL2I0NzFjNGVmLTBmNWEtNGUxYy1iNjQxLTdiNzI4NWRkYjlhYy8xY2ZiYTNhOC1jMmE0LTQzYjQtOTdiMC01NGZhODIzNzQwNzcvNWI2ZGY1YjYtMjcwNi00NzJkLTk3OWEtNjgyODgzODE5M2IyIiwiaWF0IjoxNzg2OTUxMDQzLCJleHAiOjE3ODY5OTQyNDN9.cMelDIf_oJU17eATmEGXbxyLzAShimeKvSi4YVrHxFI)
+![](images/level4-tabnotspace.png)
 
 → Vậy payload cuối cùng sẽ là:
 
@@ -50,4 +50,4 @@ Nhưng trên payload trên Caido chỉ có 2 dấu `\\` là vì ở backend đã
 `printf<TAB>\\143\\141\\164<TAB>\\040\\057\\052<TAB>|<TAB>sh`
 ```
 
-![](https://uploads.linear.app/b471c4ef-0f5a-4e1c-b641-7b7285ddb9ac/35822979-181f-4225-befe-afc0c0e029aa/27092ce4-a5a9-40e1-bc94-1924decd7e44?signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRoIjoiL2I0NzFjNGVmLTBmNWEtNGUxYy1iNjQxLTdiNzI4NWRkYjlhYy8zNTgyMjk3OS0xODFmLTQyMjUtYmVmZS1hZmMwYzBlMDI5YWEvMjcwOTJjZTQtYTVhOS00MGUxLWJjOTQtMTkyNGRlY2Q3ZTQ0IiwiaWF0IjoxNzg2OTUxMDQzLCJleHAiOjE3ODY5OTQyNDN9.QVBNS3jwWReZ5zHsx3TyIo5J5nxUwce0uPL_YElhCG0)
+![](images/level4-finalpayload.png)
