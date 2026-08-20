@@ -38,7 +38,7 @@ Nhưng trên payload trên Caido chỉ có 2 dấu `\\` là vì ở backend đã
 1. dùng: `printf \\143\\141\\164\\040\\057\\052` → `cat /*`
 2. thay `<space>` → `<tab>`
 3. bọc đọc cặp backtick `` ` ` `` để thực thi bên trong `"Hello $username"` -> `` "Hello `id`" ``
-4. gắn `| sh` để execute `` ` ` `` bên trong `" "` (mặc định nó sẽ không execute nếu không yêu cầu thực thi
+4. gắn `| sh` để execute `` ` ` `` bên trong `" "` (mặc định nó sẽ không execute nếu không yêu cầu thực thi)
 
 ![](images/level4-execute_command.png)
 
