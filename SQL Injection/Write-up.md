@@ -248,6 +248,6 @@ UPDATE users SET email='$email' WHERE username='$username'
 - Cứ dựa theo tính năng mình thấy mà đoán backend theo pipeline
 	1. Loại DB gì + phiên bản? (từ đó search ra vuln thường gặp trên phiên bản)
 	2. Chỗ nào injection được? (URL parameters, form fields, User-Agent, Referer, Cookie, X-Forwarded-For,...)
-	3. Có vuln với SQL injection không? (PoC ra)
+	3. Có vuln với SQL injection không? (proof?)
 	4. Loại SQL injection nào? (First order, second order, blind,..)
 	5. Build payload
